@@ -5,46 +5,217 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agendamento de Exames</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    :root { --azul-escuro:#1a4b8c; --azul-medio:#2a75bb; --azul-claro:#e6f2ff; --cinza:#6c757d; --verde:#25D366; }
-    body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; max-width:650px; margin:0 auto; padding:20px; text-align:center; background:var(--azul-claro); color:#333; line-height:1.6; }
-    .header { margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid rgba(0,0,0,0.1); }
-    .logo-container { display:flex; justify-content:center; gap:25px; margin:30px 0; }
-    .logo-icon { width:60px; height:60px; background:var(--azul-escuro); border-radius:18px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:28px; box-shadow:0 4px 8px rgba(0,0,0,0.15); transition:transform .3s ease, background-color .3s ease; }
-    .logo-icon:hover { transform:translateY(-3px); background:var(--azul-medio); }
-    h1 { color:var(--azul-escuro); margin:5px 0 15px; font-size:28px; font-weight:600; letter-spacing:-.5px; }
-    h2.clinic-title { color:var(--azul-escuro); margin-bottom:14px; text-align:left; }
-    .button { display:block; margin:18px auto; padding:14px 24px; background:#fff; color:var(--azul-escuro); text-decoration:none; border-radius:12px; font-weight:600; width:85%; max-width:320px; border:2px solid var(--azul-medio); transition:all .3s ease; box-shadow:0 2px 5px rgba(0,0,0,.1); }
-    .button:hover { background:var(--azul-medio); color:#fff; transform:translateY(-2px); box-shadow:0 4px 8px rgba(0,0,0,.15); }
-    .back-button { background:#fff; color:var(--cinza); border:2px solid var(--cinza); }
-    .back-button:hover { background:var(--cinza); color:#fff; }
-    .whatsapp-button { background:#fff; color:var(--verde); border:2px solid var(--verde); }
-    .whatsapp-button:hover { background:var(--verde); color:#fff; }
-    .option { margin:15px 0; padding:25px; border:1px solid #e0e0e0; border-radius:12px; display:none; background:#fff; box-shadow:0 4px 15px rgba(0,0,0,.08); text-align:left; }
-    .clinic-info { margin:12px 0 6px; line-height:1.7; font-size:16px; }
-    .specialty-note { color:var(--azul-escuro); font-size:14px; margin:12px 0; font-style:italic; opacity:.9; }
-    .footer { margin-top:50px; padding:25px; background:#fff; border-radius:12px; box-shadow:0 -2px 10px rgba(0,0,0,.05); font-size:14px; text-align:center; }
-    .footer strong { color:var(--azul-escuro); font-size:15px; }
-    .consultivo-text p { margin:8px 0; }
-    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
-    .small { width:auto; padding:12px 16px; }
-    .preference-note { font-size:13px; color:var(--cinza); margin-top:14px; font-style:italic; }
+    /* Paleta harmonizada com a sua logo (dourado/grafite/verde suave) */
+    :root{
+      --dourado:#b8a072;
+      --dourado-escuro:#9c855c;
+      --grafite:#2f2f2f;
+      --cinza:#6c6c6c;
+      --fundo:#f7f6f3;
+      --verde:#4f7f73;
+      --branco:#ffffff;
+    }
+
+    body{
+      font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+      max-width:650px;
+      margin:0 auto;
+      padding:20px;
+      text-align:center;
+      background:var(--fundo);
+      color:var(--grafite);
+      line-height:1.6;
+    }
+
+    .header{
+      margin-bottom:30px;
+      padding-bottom:20px;
+      border-bottom:1px solid rgba(0,0,0,0.08);
+    }
+
+    /* Logo principal (SVG) */
+    .site-logo{
+      display:block;
+      margin:8px auto 14px;
+      max-width:320px;
+      width:86%;
+      height:auto;
+    }
+
+    .logo-container{
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      margin:16px 0 10px;
+    }
+
+    /* Ícones alinhados com a paleta */
+    .logo-icon{
+      width:58px;
+      height:58px;
+      background:var(--dourado);
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--branco);
+      font-size:26px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.12);
+      transition:transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+    }
+    .logo-icon:hover{
+      transform:translateY(-3px);
+      background:var(--dourado-escuro);
+      box-shadow:0 6px 14px rgba(0,0,0,0.14);
+    }
+
+    h1{
+      color:var(--grafite);
+      margin:6px 0 10px;
+      font-size:26px;
+      font-weight:650;
+      letter-spacing:0.5px;
+    }
+
+    h2.clinic-title{
+      color:var(--grafite);
+      margin-bottom:14px;
+      text-align:left;
+    }
+
+    .button{
+      display:block;
+      margin:18px auto;
+      padding:14px 24px;
+      background:var(--branco);
+      color:var(--grafite);
+      text-decoration:none;
+      border-radius:12px;
+      font-weight:650;
+      width:85%;
+      max-width:340px;
+      border:2px solid var(--dourado);
+      transition:transform .25s ease, background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    .button:hover{
+      background:var(--dourado);
+      border-color:var(--dourado);
+      color:var(--branco);
+      transform:translateY(-2px);
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+    }
+
+    .back-button{
+      background:var(--branco);
+      color:var(--cinza);
+      border:2px solid var(--cinza);
+    }
+    .back-button:hover{
+      background:var(--cinza);
+      color:var(--branco);
+      border-color:var(--cinza);
+    }
+
+    .whatsapp-button{
+      background:var(--branco);
+      color:var(--verde);
+      border:2px solid var(--verde);
+    }
+    .whatsapp-button:hover{
+      background:var(--verde);
+      color:var(--branco);
+      border-color:var(--verde);
+    }
+
+    .option{
+      margin:15px 0;
+      padding:25px;
+      border:1px solid rgba(0,0,0,0.08);
+      border-radius:12px;
+      display:none;
+      background:var(--branco);
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      text-align:left;
+    }
+
+    .clinic-info{
+      margin:12px 0 6px;
+      line-height:1.7;
+      font-size:16px;
+      color:var(--grafite);
+    }
+
+    .specialty-note{
+      color:var(--grafite);
+      font-size:14px;
+      margin:12px 0;
+      font-style:italic;
+      opacity:.88;
+    }
+
+    .footer{
+      margin-top:50px;
+      padding:22px;
+      background:var(--branco);
+      border-radius:12px;
+      box-shadow:0 -2px 12px rgba(0,0,0,.06);
+      font-size:14px;
+      text-align:center;
+      color:var(--cinza);
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .footer strong{
+      color:var(--grafite);
+      font-size:15px;
+      letter-spacing:0.2px;
+    }
+
+    .consultivo-text p{ margin:8px 0; }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .small{
+      width:auto;
+      padding:12px 16px;
+    }
+
+    .preference-note{
+      font-size:13px;
+      color:var(--cinza);
+      margin-top:14px;
+      font-style:italic;
+    }
   </style>
 </head>
+
 <body>
   <div class="header">
+
+    <!-- Logo (SVG). Como o nome tem espaços, usamos %20 para evitar falhas no caminho -->
+    <img src="LOGO%20BRANCO%20EM%20VETOR.svg"
+         alt="Pedro Guedes - Radiologia Abdominal"
+         class="site-logo">
+
     <div class="logo-container">
       <div class="logo-icon"><i class="far fa-calendar-alt"></i></div>
       <div class="logo-icon"><i class="fas fa-phone-alt"></i></div>
       <div class="logo-icon"><i class="fab fa-whatsapp"></i></div>
     </div>
+
     <h1>AGENDAMENTO DE EXAMES</h1>
   </div>
 
   <div id="main-menu">
     <a href="#" class="button" onclick="showOption('usg')">Marcação de Ultrassonografia (USG)</a>
     <a href="#" class="button" onclick="showOption('tcrm')">Marcação de Tomografia/Ressonância (TC/RM)</a>
-    <!-- Nova opção -->
     <a href="#" class="button" onclick="showOption('consultivo')">Laudo Consultivo (Laudo de segunda opinião)</a>
   </div>
 
@@ -60,7 +231,7 @@
 
   <div id="tcrm-option" class="option">
     <h2 class="clinic-title">Tomografia/Ressonância - Escolha uma opção</h2>
-    <div class="specialty-note"> </div>
+    <div class="specialty-note"></div>
     <a href="#" class="button" onclick="showClinic('lucilo')">Clínica Lucilo Ávila</a>
     <a href="#" class="button" onclick="showClinic('unimed')">Unimed Recife</a>
     <a href="#" class="button" onclick="showClinic('maximagem')">Maximagem</a>
@@ -100,7 +271,6 @@
     <a href="#" class="button back-button" onclick="backToTcRm()">Voltar</a>
   </div>
 
-  <!-- Laudo Consultivo -->
   <div id="consultivo-option" class="option">
     <h2 class="clinic-title">Laudo Consultivo (Segunda Opinião)</h2>
     <div class="consultivo-text">
@@ -135,20 +305,22 @@
                 : null;
       if (id) document.getElementById(id).style.display = 'block';
     }
+
     function showClinic(clinic) {
       document.querySelectorAll('.option').forEach(el => el.style.display = 'none');
       document.getElementById(clinic + '-option').style.display = 'block';
     }
+
     function backToMain() {
       document.querySelectorAll('.option').forEach(el => el.style.display = 'none');
       document.getElementById('main-menu').style.display = 'block';
     }
+
     function backToTcRm() {
       document.querySelectorAll('.option').forEach(el => el.style.display = 'none');
       document.getElementById('tcrm-option').style.display = 'block';
     }
 
-    // Abre e-mail pré-preenchido com formatação correta
     function abrirEmailConsultivo() {
       const para = 'laudoconsultivopedro@gmail.com';
       const assunto = 'Solicitação de Laudo Consultivo (Segunda Opinião)';
